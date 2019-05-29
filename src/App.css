@@ -1,33 +1,27 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'Quicksand-Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Quicksand-Bold.ttf') format('opentype');
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'Quicksand-Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Quicksand-Medium.ttf') format('opentype');
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@font-face {
+  font-family: 'Quicksand-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Quicksand-Regular.ttf') format('opentype');
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: 'Quicksand-Light';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Quicksand-Light.ttf') format('opentype');
 }
