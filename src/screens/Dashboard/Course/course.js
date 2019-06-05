@@ -1,5 +1,19 @@
 import React, { Component, Fragment } from "react";
-import { Container, ContainerTitle, Title, ButtonAdd } from "./stylescourse";
+import { 
+  Container,
+  ContainerTitle,
+  Title,
+  ButtonAdd,
+  TextForm,
+  Input,
+  ButtonIn,
+  FormView,
+  TextFormView,
+  InputView,
+  HiddenContainer,
+  ButtonView,
+  CreateView
+ } from "./stylescourse";
 
 import axios from "axios";
 
@@ -31,7 +45,8 @@ const arrayTest = [
 
 class Course extends Component {
   state = {
-    arrayCourse: []
+    arrayCourse: [],
+    form: false
   };
 
   componentWillMount() {
@@ -40,9 +55,9 @@ class Course extends Component {
 
   getCourse = async info => {
     try {
-      const response = await axios.get("http://157.230.177.190:3000/course");
+      const response = await axios.get("http://157.230.177.190/course");
       console.log("response get\n", response);
-      this.setState({ arrayCourse: response.data.data });
+      this.setState({ arrayCourse: response.data });
       console.log(this.state.arrayCourse);
     } catch (error) {
       console.log(error);
@@ -50,14 +65,49 @@ class Course extends Component {
   };
 
   render() {
-    const { arrayCourse } = this.state;
+    const { arrayCourse, form } = this.state;
     return (
       <Container>
         <ContainerTitle>
-          <ButtonAdd onClick={this.logged}>CRIAR</ButtonAdd>
           <Title>Cursos</Title>
         </ContainerTitle>
+
         <List contentList={arrayCourse} />
+
+        <CreateView>
+        <ButtonAdd onClick={ () => this.setState({form : true})}>CRIAR</ButtonAdd>
+        </CreateView>
+
+        {
+          form &&(
+
+        <HiddenContainer> 
+
+        <FormView>
+            <TextFormView>
+              <TextForm>Nome do curso:</TextForm>
+            </TextFormView>
+              
+            <InputView>
+              <Input value={this.state.email} onChange={this.handleInputEmail} />
+            </InputView>
+  
+          </FormView>
+
+        <ButtonView>
+          <ButtonIn onClick={() => {}}>ADICIONAR</ButtonIn>
+        </ButtonView>
+        
+
+        </HiddenContainer>
+        
+
+        
+
+          )
+        }
+
+
       </Container>
     );
   }

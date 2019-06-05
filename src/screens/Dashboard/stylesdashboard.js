@@ -5,8 +5,7 @@ import { colors } from '../../styles';
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100vw;
-  height: 100vh;
+  width: 125vw;
   padding: 0px;
   align-items: flex-start;
   justify-content: flex-start;
@@ -41,7 +40,7 @@ export const Title = styled.p`
 export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column; 
-  height: 100vh;
+  height: 125vh;
   padding: 0px;
   margin-right: 15px;
   align-items: flex-start;
@@ -62,7 +61,7 @@ export const ButtonNavigation = styled.button`
   height: 48px;
   background-color: ${colors.primary};
   color: ${colors.white};
-  font-size: 18px;
+  font-size: 16px;
   font-family: Quicksand-Medium;
   margin-top: 20px;
   align-items: flex-start;

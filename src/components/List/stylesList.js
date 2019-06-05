@@ -33,7 +33,7 @@ export const TitleColumn = styled.th`
   font-family: Quicksand-Bold;
   color: ${colors.white};
   background-color: ${props => (!props.none ? colors.primary : colors.white)};
-  font-size: 20px;  
+  font-size: 16px;  
   padding-left: 25px;
   padding-right: 25px;
   white-space: nowrap; 

@@ -46,8 +46,9 @@ class List extends Component {
   };
 
   render() {
-    const contentList = [];
-    console.log(contentList);
+    //const contentList = [];
+    //console.log(contentList);
+    const { contentList } = this.props;
     if (contentList.length === 0) {
       return <Title>Ops...</Title>;
     }
@@ -55,7 +56,6 @@ class List extends Component {
       <Container>
         <Table>
           <Coluna>
-            <TitleColumn none />
             <TitleColumn none />
             {Object.keys(contentList[0]).map(key => (
               <TitleColumn>{key}</TitleColumn>
@@ -66,9 +66,7 @@ class List extends Component {
               <Line button>
                 <ButtonEdit>EDITAR</ButtonEdit>
               </Line>
-              <Line button>
-                <ButtonDelete>DELETAR</ButtonDelete>
-              </Line>
+             
               {Object.keys(item).map(key => (
                 <Line>{key === "enable" ? <ImageCheck /> : item[key]}</Line>
               ))}

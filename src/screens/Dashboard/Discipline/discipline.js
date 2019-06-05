@@ -3,7 +3,16 @@ import {
   Container,
   ContainerTitle,
   Title,
-  ButtonAdd
+  ButtonAdd,
+  TextForm,
+  Input,
+  ButtonIn,
+  FormView,
+  TextFormView,
+  InputView,
+  HiddenContainer,
+  ButtonView,
+  CreateView
 } from './stylesdiscipline';
 import axios from 'axios';
 
@@ -48,7 +57,8 @@ const arrayTest = [
 
 class Discipline extends Component {
   state = {
-    arrayDiscipline: []
+    arrayDiscipline: [],
+    form: false
   }
 
   componentWillMount() {
@@ -58,7 +68,7 @@ class Discipline extends Component {
   getDiscipline = async (info) => {
     let arraySchema = [];
     try {
-      const response = await axios.get('http://157.230.177.190:3000/discipline');
+      const response = await axios.get('http://157.230.177.190/discipline');
       console.log('response get\n', response);
 
       response.data.map(item => 
@@ -87,14 +97,71 @@ class Discipline extends Component {
   }
 
   render() {
-    const { arrayDiscipline } = this.state;
+    const { arrayDiscipline , form } = this.state;
     return (
       <Container>
         <ContainerTitle>
-          <ButtonAdd onClick={this.logged}>CRIAR</ButtonAdd>
           <Title>Disciplinas</Title>
         </ContainerTitle>
+
         <List contentList={arrayDiscipline} />
+
+        <CreateView>
+        <ButtonAdd onClick={ () => this.setState({form : true})}>CRIAR</ButtonAdd>
+        </CreateView>
+
+        {
+          form &&(
+
+        <HiddenContainer> 
+
+        <FormView>
+            <TextFormView>
+              <TextForm>ID do curso:</TextForm>
+            </TextFormView>
+              
+            <InputView>
+              <Input value={this.state.email} onChange={this.handleInputEmail} />
+            </InputView>
+  
+          </FormView>
+
+        <FormView>
+        
+        <TextFormView>
+          <TextForm>ID do responsável:</TextForm>
+        </TextFormView>
+       
+        <InputView>
+          <Input value={this.state.email} onChange={this.handleInputEmail} />
+        </InputView>
+
+        </FormView>
+
+        <FormView>
+        
+        <TextFormView>
+          <TextForm>Nome da disciplina:</TextForm>
+        </TextFormView>
+       
+        <InputView>
+          <Input value={this.state.email} onChange={this.handleInputEmail} />
+        </InputView>
+
+        </FormView>
+        
+        <ButtonView>
+          <ButtonIn onClick={() => {}}>ADICIONAR</ButtonIn>
+        </ButtonView>
+        
+
+        </HiddenContainer>
+        
+
+        
+
+          )
+        }
       </Container>
     );
   }

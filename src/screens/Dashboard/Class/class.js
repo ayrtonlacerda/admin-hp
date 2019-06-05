@@ -3,7 +3,16 @@ import {
   Container,
   ContainerTitle,
   Title,
-  ButtonAdd
+  ButtonAdd,
+  TextForm,
+  Input,
+  ButtonIn,
+  FormView,
+  TextFormView,
+  InputView,
+  HiddenContainer,
+  ButtonView,
+  CreateView
 } from './stylesclass';
 import axios from 'axios';
 
@@ -61,7 +70,8 @@ const arrayTest = [
 
 class Classes extends Component {
   state = {
-    arrayclass: []
+    arrayclass: [],
+    form: false,
   }
 
   componentWillMount() {
@@ -71,7 +81,7 @@ class Classes extends Component {
   getclass = async (info) => {
     let arraySchema = [];
     try {
-      const response = await axios.get('http://157.230.177.190:3000/class');
+      const response = await axios.get('http://157.230.177.190/class');
       console.log('response get\n', response);
 
       response.data.map(item =>
@@ -99,15 +109,69 @@ class Classes extends Component {
   }
 
   render() {
-    const { arrayclass } = this.state;
+    const { arrayclass , form } = this.state;
     return (
       <Container>
         <ContainerTitle>
-          <ButtonAdd onClick={this.logged}>CRIAR</ButtonAdd>
-          <Title>Classes</Title>
+          <Title>Turmas</Title>
         </ContainerTitle>
+
         <List contentList={arrayclass} />
+        
+
+        <CreateView>
+          <ButtonAdd onClick={ () => this.setState({form : true})}>CRIAR</ButtonAdd>
+        </CreateView>
+
+       
+
+        {
+          form &&(
+
+        <HiddenContainer> 
+
+        <FormView>
+            <TextFormView>
+              <TextForm>ID da disciplina:</TextForm>
+            </TextFormView>
+              
+            <InputView>
+              <Input value={this.state.email} onChange={this.handleInputEmail} />
+            </InputView>
+  
+          </FormView>
+
+        <FormView>
+        
+        <TextFormView>
+          <TextForm>Nome da Turma:</TextForm>
+        </TextFormView>
+       
+        <InputView>
+          <Input value={this.state.email} onChange={this.handleInputEmail} />
+        </InputView>
+
+        </FormView>
+        
+        <ButtonView>
+          <ButtonIn onClick={() => {}}>ADICIONAR</ButtonIn>
+        </ButtonView>
+        
+
+        </HiddenContainer>
+        
+
+        
+
+          )
+        }
+
+        
+
+       
       </Container>
+
+
     );
   }
 }

@@ -54,12 +54,12 @@ class Dashboard extends Component {
       <Container>
         <MenuContainer>
           <ContainerTitle>
-            <Title>AppHp</Title>
+            <Title>SPHL</Title>
           </ContainerTitle>
           <ContainerMenu>
             <ButtonNavigation onClick={() => this.setState({ renderPage: 'course' })} >Cursos</ButtonNavigation>
             <ButtonNavigation onClick={() => this.setState({ renderPage: 'discipline' })}>Disciplinas</ButtonNavigation>
-            <ButtonNavigation onClick={() => this.setState({ renderPage: 'class' })}>Classes</ButtonNavigation>
+            <ButtonNavigation onClick={() => this.setState({ renderPage: 'class' })}>Turmas</ButtonNavigation>
             <ButtonNavigation onClick={() => this.setState({ renderPage: 'user' })}>Usuarios</ButtonNavigation>
             <ButtonNavigation onClick={this.logout}>Sair</ButtonNavigation>
           </ContainerMenu>

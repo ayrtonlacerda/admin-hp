@@ -81,7 +81,7 @@ class Users extends Component {
   getuser = async (info) => {
     let arraySchema = [];
     try {
-      const response = await axios.get('http://157.230.177.190:3000/user');
+      const response = await axios.get('http://157.230.177.190/user');
       console.log('response get\n', response);
 
       response.data.map(item =>
