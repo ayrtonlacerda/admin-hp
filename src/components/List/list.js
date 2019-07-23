@@ -1,4 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
 import {
   Container,
   Title,
@@ -7,34 +10,9 @@ import {
   TitleColumn,
   Line,
   ImageCheck,
-  Check,
   ButtonDelete,
   ButtonEdit
 } from "./stylesList";
-
-const arrayTest = [
-  {
-    id: 1,
-    name: "eng redes",
-    enable: true,
-    createdAt: "2019-05-20T17:37:09.279Z",
-    updatedAt: "2019-05-20T17:37:09.279Z"
-  },
-  {
-    id: 2,
-    name: "eng eletrica",
-    enable: true,
-    createdAt: "2019-05-20T17:38:03.587Z",
-    updatedAt: "2019-05-20T17:38:03.587Z"
-  },
-  {
-    id: 3,
-    name: "eng computaçao",
-    enable: true,
-    createdAt: "2019-05-20T17:38:11.951Z",
-    updatedAt: "2019-05-20T17:38:11.951Z"
-  }
-];
 
 class List extends Component {
   constructor(props) {
@@ -64,7 +42,7 @@ class List extends Component {
           {contentList.map(item => (
             <Coluna>
               <Line button>
-                <ButtonEdit>EDITAR</ButtonEdit>
+                <ButtonEdit onClick={console.log(item)}>EDITAR</ButtonEdit>
               </Line>
               <Line button>
                 <ButtonDelete>DELETAR</ButtonDelete>

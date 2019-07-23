@@ -25,8 +25,10 @@ class Login extends Component {
         email: "paulo@email.com",
         password: "sqn409"
       });
-      console.log("API", response);
       localStorage.setItem("tokenUser", response.data.token);
+      const token = localStorage.getItem("tokenUser");
+      console.log("token", token);
+
       this.props.history.push("/dashboard");
     } catch (error) {
       console.log(error);

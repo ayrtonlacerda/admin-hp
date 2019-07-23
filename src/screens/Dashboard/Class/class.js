@@ -1,70 +1,18 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Container, ContainerTitle, Title, ButtonAdd } from "./stylesclass";
-import axios from "axios";
+import api from "../../../services/api";
 
 import { List } from "../../../components";
-
-const arrayTest = [
-  {
-    id: 1,
-    attribute: "A",
-    code: 6283053,
-    validity: null,
-    createdAt: "2019-05-20T18:10:37.357Z",
-    updatedAt: "2019-05-20T18:10:37.357Z",
-    class_id: 1
-  },
-  {
-    id: 2,
-    attribute: "B",
-    code: 1253679,
-    validity: null,
-    createdAt: "2019-05-20T18:10:42.406Z",
-    updatedAt: "2019-05-20T18:10:42.406Z",
-    class_id: 1
-  },
-  {
-    id: 3,
-    attribute: "A",
-    code: 9886077,
-    validity: null,
-    createdAt: "2019-05-20T19:35:30.013Z",
-    updatedAt: "2019-05-20T19:35:30.013Z",
-    class_id: 2
-  },
-  {
-    id: 4,
-    attribute: "A",
-    code: 3134483,
-    validity: null,
-    createdAt: "2019-05-20T19:35:31.653Z",
-    updatedAt: "2019-05-20T19:35:31.653Z",
-    class_id: 2
-  },
-  {
-    id: 5,
-    attribute: "B",
-    code: 9424026,
-    validity: null,
-    createdAt: "2019-05-20T19:35:36.209Z",
-    updatedAt: "2019-05-20T19:35:36.209Z",
-    class_id: 2
-  }
-];
 
 class Classes extends Component {
   state = {
     arrayclass: []
   };
 
-  componentWillMount() {
-    this.getclass();
-  }
-
-  getclass = async info => {
+  async componentWillMount() {
     let arraySchema = [];
     try {
-      const response = await axios.get("http://157.230.177.190:3000/class");
+      const response = await api.get("/class");
       console.log("response get\n", response);
 
       response.data.map(
@@ -88,7 +36,7 @@ class Classes extends Component {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   render() {
     const { arrayclass } = this.state;
