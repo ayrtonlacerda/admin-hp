@@ -1,0 +1,12 @@
+.modal {
+  outline: none;
+  background: white;
+  height: 600px;
+  width: 500px;
+  font-size: 1.6rem;
+  align-items: center;
+}
+
+h3 {
+  align-items: center;
+}

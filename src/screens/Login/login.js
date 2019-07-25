@@ -22,8 +22,8 @@ class Login extends Component {
 
     try {
       const response = await api.post("/user/login", {
-        email: "paulo@email.com",
-        password: "sqn409"
+        email: email,
+        password: password
       });
       localStorage.setItem("tokenUser", response.data.token);
       const token = localStorage.getItem("tokenUser");
