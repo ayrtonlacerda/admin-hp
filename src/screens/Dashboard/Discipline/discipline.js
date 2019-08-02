@@ -38,6 +38,8 @@ class Discipline extends Component {
 
   async componentWillMount() {
     let arraySchema = [];
+    const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
+    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/discipline");
       console.log("response get\n", response);
@@ -118,6 +120,10 @@ class Discipline extends Component {
     }
   };
 
+  editRow = () => {
+    console.log("OIE");
+  };
+
   render() {
     const {
       arrayDiscipline,
@@ -129,7 +135,7 @@ class Discipline extends Component {
       <Container>
         <ContainerTitle>
           <ButtonAdd onClick={this.openModal}>CRIAR</ButtonAdd>
-          <Title>Classes</Title>
+          <Title>Disciplinas</Title>
         </ContainerTitle>
         <List contentList={arrayDiscipline} />
         <Modal

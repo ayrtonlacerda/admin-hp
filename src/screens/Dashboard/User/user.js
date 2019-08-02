@@ -41,6 +41,8 @@ class Users extends Component {
 
   async componentWillMount() {
     let arraySchema = [];
+    const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
+    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/user");
       console.log("response get\n", response.data.data);
@@ -131,7 +133,7 @@ class Users extends Component {
       <Container>
         <ContainerTitle>
           <ButtonAdd onClick={this.openModal}>CRIAR</ButtonAdd>
-          <Title>User</Title>
+          <Title>Usuários</Title>
         </ContainerTitle>
         <List contentList={arrayUser} />
         <Modal

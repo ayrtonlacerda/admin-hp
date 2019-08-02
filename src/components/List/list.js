@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import EditionForm from "../../components/EditionForm";
+import Modal from "react-modal";
 
 import {
   Container,
@@ -11,8 +13,23 @@ import {
   Line,
   ImageCheck,
   ButtonDelete,
-  ButtonEdit
+  ButtonEdit,
+  ButtonIn,
+  Input
 } from "./stylesList";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    height: 500,
+    width: 400
+  }
+};
 
 class List extends Component {
   constructor(props) {
@@ -20,7 +37,26 @@ class List extends Component {
   }
 
   state = {
-    arrayCheck: []
+    arrayCheck: [],
+    dataToEdit: [],
+    modalIsOpen: false
+  };
+  storeItem = async item => {};
+  openEditForm = item => {
+    //console.log("IIIITEM", item);
+    return <EditionForm content={item} />;
+  };
+
+  openModal = () => {
+    this.setState({
+      modalIsOpen: true
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false
+    });
   };
 
   render() {
@@ -32,6 +68,25 @@ class List extends Component {
     return (
       <Container>
         <Table>
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            contentLabel="Example Modal"
+            style={customStyles}
+          >
+            <Title>Editar Informações</Title>
+            {Object.keys(this.state.dataToEdit).map(key => (
+              <Title>
+                {key === "enable" ? <ImageCheck /> : this.state.dataToEdit[key]}
+                <Input />
+              </Title>
+            ))}
+
+            <ButtonIn onClick={() => this.registerCourse()}>
+              Salvar Edição
+            </ButtonIn>
+          </Modal>
           <Coluna>
             <TitleColumn none />
             <TitleColumn none />
@@ -42,7 +97,13 @@ class List extends Component {
           {contentList.map(item => (
             <Coluna>
               <Line button>
-                <ButtonEdit onClick={console.log(item)}>EDITAR</ButtonEdit>
+                <ButtonEdit
+                  onClick={() =>
+                    this.setState({ dataToEdit: item, modalIsOpen: true })
+                  }
+                >
+                  EDITAR
+                </ButtonEdit>
               </Line>
               <Line button>
                 <ButtonDelete>DELETAR</ButtonDelete>

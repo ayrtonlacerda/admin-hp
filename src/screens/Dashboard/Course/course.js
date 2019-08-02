@@ -37,6 +37,8 @@ class Course extends Component {
   };
 
   async componentWillMount() {
+    const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
+    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/course");
       console.log("response get\n", response.data.data);

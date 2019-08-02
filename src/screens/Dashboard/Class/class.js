@@ -37,6 +37,8 @@ class Classes extends Component {
 
   async componentWillMount() {
     let arraySchema = [];
+    const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
+    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/class");
       console.log("response get\n", response);
@@ -83,7 +85,7 @@ class Classes extends Component {
       <Container>
         <ContainerTitle>
           <ButtonAdd onClick={() => this.openModal()}>CRIAR</ButtonAdd>
-          <Title>Cursos</Title>
+          <Title>Turmas</Title>
         </ContainerTitle>
         <List contentList={arrayclass} />
         <Modal
