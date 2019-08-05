@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Picker } from "react";
 import {
   Container,
   ContainerTitle,
@@ -9,6 +9,8 @@ import {
   ButtonIn
 } from "./stylesuser";
 import Modal from "react-modal";
+import Select from "react-select";
+
 import api from "../../../services/api";
 
 import { List } from "../../../components";
@@ -26,6 +28,12 @@ const customStyles = {
   }
 };
 
+const options = [
+  { value: "admin", label: "Administrador" },
+  { value: "student", label: "Aluno" },
+  { value: "prof", label: "Professor" }
+];
+
 class Users extends Component {
   state = {
     arrayUser: [],
@@ -34,6 +42,8 @@ class Users extends Component {
     name: null,
     email: null,
     password: null,
+    selectedOption: null,
+    type: null,
     admin: false,
     prof: false,
     student: false
@@ -67,6 +77,10 @@ class Users extends Component {
     }
   }
 
+  handleChange = selectedOption => {
+    this.setState({ selectedOption, type: selectedOption.value });
+  };
+
   openModal = () => {
     this.setState({
       modalIsOpen: true
@@ -79,41 +93,41 @@ class Users extends Component {
     });
   };
 
-  handleInputIdCourse = e => {
-    this.setState({ idCourse: e.target.value });
+  handleInputPassword = e => {
+    this.setState({ password: e.target.value });
   };
 
-  handleIdAccountable = e => {
-    this.setState({ idAccountable: e.target.value });
+  handleInputUserEmail = e => {
+    this.setState({ email: e.target.value });
   };
 
-  handleInputDisciplineName = e => {
-    this.setState({ disciplineName: e.target.value });
+  handleInputUserName = e => {
+    this.setState({ name: e.target.value });
   };
 
-  registerDiscipline = async () => {
-    const { disciplineName, idCourse, idAccountable } = this.state;
+  registerUser = async () => {
+    const { name, email, password, type } = this.state;
+    console.log("STATE", name, email, password, type);
     const token = localStorage.getItem("tokenUser");
-    console.log(token);
     try {
-      if (disciplineName !== null) {
-        const response = await api.post(
-          "/discipline",
-          {
-            name: disciplineName,
-            course_id: idCourse,
-            accountable: idAccountable
-          },
-          {
-            headers: {
-              authorization: token
-            }
+      console.log("teste");
+      const response = await api.post(
+        "/user",
+        {
+          name: name,
+          email: email,
+          type: type,
+          password_hash: password
+        },
+        {
+          headers: {
+            authorization: token
           }
-        );
-        console.log(response);
-        this.closeModal();
-        window.location.reload();
-      }
+        }
+      );
+      console.log(response);
+      this.closeModal();
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -127,7 +141,8 @@ class Users extends Component {
       password,
       admin,
       prof,
-      student
+      student,
+      selectedOption
     } = this.state;
     return (
       <Container>
@@ -145,31 +160,24 @@ class Users extends Component {
         >
           <Title>Criar usuário</Title>
           <TextForm>Nome do usuário: </TextForm>
-          <Input value={name} onChange={this.handleInputDisciplineName} />
+          <Input value={name} onChange={this.handleInputUserName} />
           <TextForm>E-mail: </TextForm>
-          <Input value={email} onChange={this.handleInputIdCourse} />
+          <Input value={email} onChange={this.handleInputUserEmail} />
 
           <TextForm>Senha: </TextForm>
           <Input
             type="password"
             value={password}
-            onChange={this.handleInputIdCourse}
+            onChange={this.handleInputPassword}
           />
 
           <TextForm>Tipo de usuário : </TextForm>
-          <div className="form-group">
-            <select
-              value={this.state.value}
-              onChange={value => this.setState({ type: value })}
-              className="form-control"
-            >
-              <option>Selecionar tipo</option>
-              <option value={admin}>Administrador</option>
-              <option value={prof}>Professor</option>
-              <option value={student}>Aluno</option>
-            </select>
-          </div>
-          {console.log(this.state)}
+          <Select
+            value={selectedOption}
+            onChange={this.handleChange}
+            options={options}
+          />
+
           <ButtonIn onClick={() => this.registerUser()}>
             CADASTRAR USUÁRIO
           </ButtonIn>

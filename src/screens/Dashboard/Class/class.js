@@ -10,7 +10,6 @@ import {
 } from "./stylesclass";
 import api from "../../../services/api";
 import Modal from "react-modal";
-
 import { List } from "../../../components";
 
 const customStyles = {
@@ -78,6 +77,44 @@ class Classes extends Component {
     });
   };
 
+  handleInputAlfaNum = e => {
+    this.setState({ alfanum: e.target.value });
+  };
+
+  handleInputIdDiscipline = e => {
+    this.setState({ idDiscipline: e.target.value });
+  };
+
+  handleInputIdValidity = e => {
+    this.setState({ validity: e.target.value });
+  };
+
+  registerClass = async () => {
+    const { alfanum, validity, idDiscipline } = this.state;
+    const token = localStorage.getItem("tokenUser");
+    try {
+      if (alfanum !== null) {
+        const response = await api.post(
+          "/class",
+          {
+            attribute: alfanum,
+            validity: null,
+            discipline_id: idDiscipline
+          },
+          {
+            headers: {
+              authorization: token
+            }
+          }
+        );
+        console.log(response);
+        this.closeModal();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
     const { arrayclass, alfanum, validity, idDiscipline } = this.state;
 
@@ -109,7 +146,7 @@ class Classes extends Component {
             onChange={this.handleInputIdValidity}
           />
 
-          <ButtonIn onClick={() => this.registerCourse()}>
+          <ButtonIn onClick={() => this.registerClass()}>
             CADASTRAR CURSO
           </ButtonIn>
         </Modal>

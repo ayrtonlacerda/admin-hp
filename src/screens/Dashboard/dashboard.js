@@ -45,7 +45,7 @@ class Dashboard extends Component {
       <Container>
         <MenuContainer>
           <ContainerTitle>
-            <Title>AppHp</Title>
+            <Title>SPHL Admin</Title>
           </ContainerTitle>
           <ContainerMenu>
             <ButtonNavigation

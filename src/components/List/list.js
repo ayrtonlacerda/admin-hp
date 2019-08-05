@@ -76,10 +76,18 @@ class List extends Component {
             style={customStyles}
           >
             <Title>Editar Informações</Title>
-            {Object.keys(this.state.dataToEdit).map(key => (
+            {/* {Object.keys(contentList[0]).map(key => (
+              <Title>
+                {key}
+                <Input />
+              </Title>
+            ))}
+            {console.log(this.state.dataToEdit)} */}
+            {Object.values(this.state.dataToEdit).map(key => (
               <Title>
                 {key === "enable" ? <ImageCheck /> : this.state.dataToEdit[key]}
-                <Input />
+                {console.log(window.location.pathname)}
+                <Input placeholder={key} />
               </Title>
             ))}
 
