@@ -22,9 +22,12 @@ class Login extends Component {
 
     try {
       const response = await api.post("/user/login", {
-        email: email,
-        password: password
-      });
+        body: {
+          email: email,
+          password: password
+        }
+      }
+    );
       localStorage.setItem("tokenUser", response.data.token);
       const token = localStorage.getItem("tokenUser");
       console.log("token", token);

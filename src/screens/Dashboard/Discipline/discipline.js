@@ -137,7 +137,7 @@ class Discipline extends Component {
           <ButtonAdd onClick={this.openModal}>CRIAR</ButtonAdd>
           <Title>Disciplinas</Title>
         </ContainerTitle>
-        <List contentList={arrayDiscipline} />
+        <List contentList={arrayDiscipline} page='discipline' />
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

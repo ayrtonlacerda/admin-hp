@@ -150,7 +150,7 @@ class Users extends Component {
           <ButtonAdd onClick={this.openModal}>CRIAR</ButtonAdd>
           <Title>Usuários</Title>
         </ContainerTitle>
-        <List contentList={arrayUser} />
+        <List contentList={arrayUser} page='user' />
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

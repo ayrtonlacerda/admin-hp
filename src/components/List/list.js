@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import EditionForm from "../../components/EditionForm";
 import Modal from "react-modal";
+import api from "../../services/api";
 
 import {
   Container,
@@ -39,6 +40,7 @@ class List extends Component {
   state = {
     arrayCheck: [],
     dataToEdit: [],
+    dataSend: {},
     modalIsOpen: false
   };
   storeItem = async item => {};
@@ -57,6 +59,80 @@ class List extends Component {
     this.setState({
       modalIsOpen: false
     });
+  };
+
+  handlerEdit = (param) => {
+    let data = {}; 
+    Object.keys(param).map(key => {
+      data[key] = '';
+    })
+    this.setState({ dataToEdit: param, modalIsOpen: true, dataSend: data })
+  }
+
+  changeInputValue = (value, key) => {
+    const { dataSend } = this.state;
+    let data = {};    
+    data = {
+      ...dataSend,
+      key: value,
+    }
+    this.setState({ dataSend: data });
+  }
+
+  saveEdition = async () => {
+    const { page } = this.props;
+    const { dataSend } = this.state;
+    const token = await localStorage.getItem("tokenUser");
+
+    let data = {};
+    Object.keys(dataSend).map(key => {
+      if(dataSend[key] !== '') {
+        data = {
+          ...data,
+          key: dataSend[key],
+        }
+      }
+    });
+
+    try{
+      await api.put(`/${page}`, data ,
+        {
+          headers: {
+            authorization: token
+          }
+        } 
+      )
+    } catch (err) {
+      console.log('Error edit', err);
+    }
+  }
+
+  registerDiscipline = async () => {
+    const { disciplineName, idCourse, idAccountable } = this.state;
+    const token = localStorage.getItem("tokenUser");
+    console.log(token);
+    try {
+      if (disciplineName !== null) {
+        const response = await api.post(
+          "/discipline",
+          {
+            name: disciplineName,
+            course_id: idCourse,
+            accountable: idAccountable
+          },
+          {
+            headers: {
+              authorization: token
+            }
+          }
+        );
+        console.log(response);
+        this.closeModal();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
@@ -83,15 +159,23 @@ class List extends Component {
               </Title>
             ))}
             {console.log(this.state.dataToEdit)} */}
-            {Object.values(this.state.dataToEdit).map(key => (
-              <Title>
-                {key === "enable" ? <ImageCheck /> : this.state.dataToEdit[key]}
-                {console.log(window.location.pathname)}
-                <Input placeholder={key} />
-              </Title>
-            ))}
-
-            <ButtonIn onClick={() => this.registerCourse()}>
+            {Object.values(this.state.dataToEdit).map(key => {
+                if(key !== 'id' || key !== 'createdAt' || key !== 'updatedAt') {
+                  return (
+                    <Title>
+                      {key === "enable" ? <ImageCheck /> : this.state.dataToEdit[key]}
+                      {console.log(window.location.pathname)}
+                      <Input 
+                        placeholder={key}                        
+                        value={this.state.dataSend[key]} 
+                        onChange={value => this.changeInputValue(value, key)}
+                      />
+                    </Title>
+                  )
+                }              
+              }
+            )}
+            <ButtonIn onClick={() => this.saveEdition()}>
               Salvar Edição
             </ButtonIn>
           </Modal>
@@ -107,7 +191,7 @@ class List extends Component {
               <Line button>
                 <ButtonEdit
                   onClick={() =>
-                    this.setState({ dataToEdit: item, modalIsOpen: true })
+                    this.handlerEdit(item)
                   }
                 >
                   EDITAR
