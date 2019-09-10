@@ -64,6 +64,22 @@ class Course extends Component {
     this.setState({ courseName: e.target.value });
   };
 
+  updateCourse = async data => {
+    const token = localStorage.getItem("tokenUser");
+    const { id, body } = data;
+
+    try {
+      const response = await api.put(`/course/${id}`, body, {
+        headers: {
+          authorization: token
+        }
+      });
+      console.log("response update course", response);
+    } catch (error) {
+      console.log("error update course", error);
+    }
+  };
+
   registerCourse = async () => {
     const { courseName, enable } = this.state;
     const token = localStorage.getItem("tokenUser");
@@ -100,7 +116,7 @@ class Course extends Component {
           <ButtonAdd onClick={() => this.openModal()}>CRIAR</ButtonAdd>
           <Title>Cursos</Title>
         </ContainerTitle>
-        <List contentList={arrayCourse} />
+        <List contentList={arrayCourse} onUpdateForm={this.updateCourse} />
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

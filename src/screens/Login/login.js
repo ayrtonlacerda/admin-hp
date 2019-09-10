@@ -21,19 +21,19 @@ class Login extends Component {
     const { email, password } = this.state;
 
     try {
+      console.log(this.state.email);
       const response = await api.post("/user/login", {
-        body: {
-          email: email,
-          password: password
-        }
-      }
-    );
+        email: email,
+        password: password
+      });
+
       localStorage.setItem("tokenUser", response.data.token);
       const token = localStorage.getItem("tokenUser");
       console.log("token", token);
 
       this.props.history.push("/dashboard");
     } catch (error) {
+      console.log("Diana");
       console.log(error);
     }
   };

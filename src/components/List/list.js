@@ -61,51 +61,43 @@ class List extends Component {
     });
   };
 
-  handlerEdit = (param) => {
-    let data = {}; 
+  handlerEdit = param => {
+    let data = {};
     Object.keys(param).map(key => {
-      data[key] = '';
-    })
-    this.setState({ dataToEdit: param, modalIsOpen: true, dataSend: data })
-  }
+      data[key] = "";
+    });
+    this.setState({ dataToEdit: param, modalIsOpen: true, dataSend: data });
+  };
 
   changeInputValue = (value, key) => {
     const { dataSend } = this.state;
-    let data = {};    
-    data = {
-      ...dataSend,
-      key: value,
-    }
+    let data = dataSend;
+    data[key] = value;
+    console.log("data: \n", data);
     this.setState({ dataSend: data });
-  }
+  };
 
   saveEdition = async () => {
-    const { page } = this.props;
-    const { dataSend } = this.state;
-    const token = await localStorage.getItem("tokenUser");
+    const { onUpdateForm } = this.props;
+    const { dataSend, dataToEdit } = this.state;
 
     let data = {};
     Object.keys(dataSend).map(key => {
-      if(dataSend[key] !== '') {
+      if (dataSend[key] !== "") {
         data = {
           ...data,
-          key: dataSend[key],
-        }
+          key: dataSend.key
+        };
       }
     });
 
-    try{
-      await api.put(`/${page}`, data ,
-        {
-          headers: {
-            authorization: token
-          }
-        } 
-      )
-    } catch (err) {
-      console.log('Error edit', err);
-    }
-  }
+    const send = {
+      id: dataToEdit.id,
+      body: data
+    };
+    console.log("send: ", [send, dataSend, dataToEdit]);
+    onUpdateForm(send);
+  };
 
   registerDiscipline = async () => {
     const { disciplineName, idCourse, idAccountable } = this.state;
@@ -159,22 +151,22 @@ class List extends Component {
               </Title>
             ))}
             {console.log(this.state.dataToEdit)} */}
-            {Object.values(this.state.dataToEdit).map(key => {
-                if(key !== 'id' || key !== 'createdAt' || key !== 'updatedAt') {
-                  return (
-                    <Title>
-                      {key === "enable" ? <ImageCheck /> : this.state.dataToEdit[key]}
-                      {console.log(window.location.pathname)}
-                      <Input 
-                        placeholder={key}                        
-                        value={this.state.dataSend[key]} 
-                        onChange={value => this.changeInputValue(value, key)}
-                      />
-                    </Title>
-                  )
-                }              
+            {Object.keys(this.state.dataToEdit).map(key => {
+              console.log("keyy object\n\n", key);
+              if (key !== "id" && key !== "createdAt" && key !== "updatedAt") {
+                return (
+                  <Title>
+                    {key === "enable" ? <ImageCheck /> : `${key}\n`}
+                    {console.log(window.location.pathname)}
+                    <Input
+                      placeholder={this.state.dataSend[key].value}
+                      value={this.state.dataSend.key}
+                      onChange={value => this.changeInputValue(value, key)}
+                    />
+                  </Title>
+                );
               }
-            )}
+            })}
             <ButtonIn onClick={() => this.saveEdition()}>
               Salvar Edição
             </ButtonIn>
@@ -189,11 +181,7 @@ class List extends Component {
           {contentList.map(item => (
             <Coluna>
               <Line button>
-                <ButtonEdit
-                  onClick={() =>
-                    this.handlerEdit(item)
-                  }
-                >
+                <ButtonEdit onClick={() => this.handlerEdit(item)}>
                   EDITAR
                 </ButtonEdit>
               </Line>
