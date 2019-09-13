@@ -41,7 +41,8 @@ class List extends Component {
     arrayCheck: [],
     dataToEdit: [],
     dataSend: {},
-    modalIsOpen: false
+    modalIsOpen: false,
+    input: null
   };
   storeItem = async item => {};
   openEditForm = item => {
@@ -70,9 +71,10 @@ class List extends Component {
   };
 
   changeInputValue = (value, key) => {
+    console.log("HAHAHAHAHAH\n\n\n\n", [value.target.value, key]);
     const { dataSend } = this.state;
     let data = dataSend;
-    data[key] = value;
+    data[key] = value.target.value;
     console.log("data: \n", data);
     this.setState({ dataSend: data });
   };
@@ -84,10 +86,7 @@ class List extends Component {
     let data = {};
     Object.keys(dataSend).map(key => {
       if (dataSend[key] !== "") {
-        data = {
-          ...data,
-          key: dataSend.key
-        };
+        data[key] = dataSend[key];
       }
     });
 
@@ -95,7 +94,7 @@ class List extends Component {
       id: dataToEdit.id,
       body: data
     };
-    console.log("send: ", [send, dataSend, dataToEdit]);
+    console.log("send: ", [send, dataSend, data, dataToEdit]);
     onUpdateForm(send);
   };
 
@@ -152,16 +151,16 @@ class List extends Component {
             ))}
             {console.log(this.state.dataToEdit)} */}
             {Object.keys(this.state.dataToEdit).map(key => {
-              console.log("keyy object\n\n", key);
+              console.log("keyy object\n\n", [key, this.state.dataSend]);
               if (key !== "id" && key !== "createdAt" && key !== "updatedAt") {
                 return (
                   <Title>
                     {key === "enable" ? <ImageCheck /> : `${key}\n`}
                     {console.log(window.location.pathname)}
                     <Input
-                      placeholder={this.state.dataSend[key].value}
-                      value={this.state.dataSend.key}
-                      onChange={value => this.changeInputValue(value, key)}
+                      placeholder={this.state.input}
+                      value={this.state.input}
+                      onChange={text => this.changeInputValue(text, key)}
                     />
                   </Title>
                 );
