@@ -6,10 +6,12 @@ import {
   Title,
   TextForm,
   Input,
-  ButtonIn
+  ButtonIn,
+  Image
 } from "./styleslogin";
 
 import api from "../../services/api";
+import logo from "../../assets/img/logo.png";
 
 class Login extends Component {
   state = {
@@ -21,7 +23,6 @@ class Login extends Component {
     const { email, password } = this.state;
 
     try {
-      console.log(this.state.email);
       const response = await api.post("/user/login", {
         email: email,
         password: password
@@ -29,11 +30,9 @@ class Login extends Component {
 
       localStorage.setItem("tokenUser", response.data.token);
       const token = localStorage.getItem("tokenUser");
-      console.log("token", token);
 
       this.props.history.push("/dashboard");
     } catch (error) {
-      console.log("Diana");
       console.log(error);
     }
   };
@@ -52,11 +51,15 @@ class Login extends Component {
     return (
       <Container>
         <Box>
-          <Title>Login</Title>
-          <TextForm>email:</TextForm>
+          <Image src={logo} alt="Logo" />
+          <TextForm>Usuário</TextForm>
           <Input value={email} onChange={this.handleInputEmail} />
-          <TextForm>password</TextForm>
-          <Input value={password} onChange={this.handleInputPassWord} />
+          <TextForm>Senha</TextForm>
+          <Input
+            type="password"
+            value={password}
+            onChange={this.handleInputPassWord}
+          />
           <ButtonIn onClick={() => this.userLogin()}>ENTRAR</ButtonIn>
         </Box>
       </Container>

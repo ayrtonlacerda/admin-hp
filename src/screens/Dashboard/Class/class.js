@@ -37,28 +37,22 @@ class Classes extends Component {
   async componentWillMount() {
     let arraySchema = [];
     const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
-    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/class");
-      console.log("response get\n", response);
 
       response.data.map(
         item =>
           (arraySchema = [
             ...arraySchema,
             {
-              id: item.id,
-              Codigo: item.code,
-              Turma: item.attribute,
+              "Cód Disciplina": item.discipline_id,
+              "Cód Cadastro": item.code,
               Disciplina: item.disciplineInfo.name,
-              "Id da disciplina": item.discipline_id,
-              "Nome Discipina": item.disciplineInfo.name,
-              "Id Responsavel": item.disciplineInfo.accountable
+              Turma: item.attribute,
+              "Cód Responsavel": item.disciplineInfo.accountable
             }
           ])
       );
-
-      console.log("arraySchema\n", arraySchema);
       this.setState({ arrayclass: arraySchema });
     } catch (error) {
       console.log(error);
@@ -107,7 +101,6 @@ class Classes extends Component {
             }
           }
         );
-        console.log(response);
         this.closeModal();
         window.location.reload();
       }

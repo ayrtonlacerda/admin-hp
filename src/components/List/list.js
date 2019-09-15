@@ -46,7 +46,6 @@ class List extends Component {
   };
   storeItem = async item => {};
   openEditForm = item => {
-    //console.log("IIIITEM", item);
     return <EditionForm content={item} />;
   };
 
@@ -71,11 +70,9 @@ class List extends Component {
   };
 
   changeInputValue = (value, key) => {
-    console.log("HAHAHAHAHAH\n\n\n\n", [value.target.value, key]);
     const { dataSend } = this.state;
     let data = dataSend;
     data[key] = value.target.value;
-    console.log("data: \n", data);
     this.setState({ dataSend: data });
   };
 
@@ -94,14 +91,12 @@ class List extends Component {
       id: dataToEdit.id,
       body: data
     };
-    console.log("send: ", [send, dataSend, data, dataToEdit]);
     onUpdateForm(send);
   };
 
   registerDiscipline = async () => {
     const { disciplineName, idCourse, idAccountable } = this.state;
     const token = localStorage.getItem("tokenUser");
-    console.log(token);
     try {
       if (disciplineName !== null) {
         const response = await api.post(
@@ -117,7 +112,6 @@ class List extends Component {
             }
           }
         );
-        console.log(response);
         this.closeModal();
         window.location.reload();
       }
@@ -128,7 +122,6 @@ class List extends Component {
 
   render() {
     const { contentList } = this.props;
-    console.log(this.props.contentList.length);
     if (contentList.length === 0) {
       return <Title>Ops...</Title>;
     }
@@ -151,12 +144,10 @@ class List extends Component {
             ))}
             {console.log(this.state.dataToEdit)} */}
             {Object.keys(this.state.dataToEdit).map(key => {
-              console.log("keyy object\n\n", [key, this.state.dataSend]);
               if (key !== "id" && key !== "createdAt" && key !== "updatedAt") {
                 return (
                   <Title>
                     {key === "enable" ? <ImageCheck /> : `${key}\n`}
-                    {console.log(window.location.pathname)}
                     <Input
                       placeholder={this.state.input}
                       value={this.state.input}

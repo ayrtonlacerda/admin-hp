@@ -1,6 +1,5 @@
-import styled from 'styled-components';
-import { colors } from '../../styles';
-
+import styled from "styled-components";
+import { colors } from "../../styles";
 
 export const Container = styled.div`
   display: flex;
@@ -20,6 +19,13 @@ export const Container = styled.div`
   padding: 0;
 `;
 
+export const Image = styled.img`
+  width: 100px;
+  height: 100px;
+  margin-left: 50px;
+  margin-top: 20px;
+`;
+
 export const ContainerTitle = styled.div`
   display: flex;
   flex-direction: row;
@@ -36,11 +42,11 @@ export const Title = styled.p`
   margin-left: 30px;
   padding: 0px;
   color: ${colors.white};
- `;
+`;
 
 export const MenuContainer = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   height: 100vh;
   padding: 0px;
   margin-right: 15px;
@@ -64,7 +70,22 @@ export const ButtonNavigation = styled.button`
   color: ${colors.white};
   font-size: 18px;
   font-family: Quicksand-Medium;
+  font-weight: 700;
   margin-top: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 0px;
+`;
+
+export const ButtonExit = styled.button`
+  width: 150px;
+  height: 48px;
+  background-color: ${colors.primary};
+  color: ${colors.danger};
+  font-size: 18px;
+  font-family: Quicksand-Medium;
+  font-weight: 700;
+  margin-top: 40px;
   align-items: flex-start;
   justify-content: flex-start;
   border: 0px;

@@ -39,29 +39,26 @@ class Discipline extends Component {
   async componentWillMount() {
     let arraySchema = [];
     const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
-    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/discipline");
-      console.log("response get\n", response);
 
       response.data.map(
         item =>
           (arraySchema = [
             ...arraySchema,
             {
-              id: item.id,
-              name: item.name,
-              start: item.start,
-              finish: item.finish,
-              "Nome do Curso": item.courseInfo.name,
-              idIfCourse: item.courseInfo.id,
-              nameOfAccountable: item.accountableInfo.name,
-              idOfnameOfAccountable: item.accountableInfo.id
+              Código: item.id,
+              Disciplina: item.name,
+              Início: item.start,
+              Fim: item.finish,
+              Curso: item.courseInfo.name,
+              "Cód Curso": item.courseInfo.id,
+              Responsável: item.accountableInfo.name,
+              "Cód Resposável": item.accountableInfo.id
             }
           ])
       );
 
-      console.log("arraySchema\n", arraySchema);
       this.setState({ arrayDiscipline: arraySchema });
     } catch (error) {
       console.log(error);
@@ -95,7 +92,6 @@ class Discipline extends Component {
   registerDiscipline = async () => {
     const { disciplineName, idCourse, idAccountable } = this.state;
     const token = localStorage.getItem("tokenUser");
-    console.log(token);
     try {
       if (disciplineName !== null) {
         const response = await api.post(
@@ -111,17 +107,12 @@ class Discipline extends Component {
             }
           }
         );
-        console.log(response);
         this.closeModal();
         window.location.reload();
       }
     } catch (error) {
       console.log(error);
     }
-  };
-
-  editRow = () => {
-    console.log("OIE");
   };
 
   render() {
@@ -137,7 +128,7 @@ class Discipline extends Component {
           <ButtonAdd onClick={this.openModal}>CRIAR</ButtonAdd>
           <Title>Disciplinas</Title>
         </ContainerTitle>
-        <List contentList={arrayDiscipline} page='discipline' />
+        <List contentList={arrayDiscipline} page="discipline" />
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -156,7 +147,6 @@ class Discipline extends Component {
           <TextForm>ID do responsável:</TextForm>
           <Input value={idAccountable} onChange={this.handleIdAccountable} />
 
-          {console.log(this.state)}
           <ButtonIn onClick={() => this.registerDiscipline()}>
             CADASTRAR DISCIPLINA
           </ButtonIn>

@@ -37,12 +37,24 @@ class Course extends Component {
   };
 
   async componentWillMount() {
+    let arraySchema = [];
     const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
-    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/course");
-      console.log("response get\n", response.data.data);
-      this.setState({ arrayCourse: response.data.data });
+
+      response.data.data.map(
+        item =>
+          (arraySchema = [
+            ...arraySchema,
+            {
+              Código: item.id,
+              Nome: item.name,
+              Habilitado: item.enable
+            }
+          ])
+      );
+
+      this.setState({ arrayCourse: arraySchema });
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +86,6 @@ class Course extends Component {
           authorization: token
         }
       });
-      console.log("response update course", response);
     } catch (error) {
       console.log("error update course", error);
     }
@@ -83,7 +94,6 @@ class Course extends Component {
   registerCourse = async () => {
     const { courseName, enable } = this.state;
     const token = localStorage.getItem("tokenUser");
-    console.log("Req Data \n", courseName, enable);
 
     try {
       if (courseName !== null) {
@@ -99,7 +109,6 @@ class Course extends Component {
             }
           }
         );
-        console.log(response);
         this.closeModal();
         window.location.reload();
       }
@@ -134,7 +143,6 @@ class Course extends Component {
             value={enable}
             onChange={() => this.setState({ enable: true })}
           />
-          {console.log(this.state)}
           <ButtonIn onClick={() => this.registerCourse()}>
             CADASTRAR CURSO
           </ButtonIn>

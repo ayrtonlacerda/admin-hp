@@ -52,22 +52,17 @@ class Users extends Component {
   async componentWillMount() {
     let arraySchema = [];
     const itemToEdit = JSON.parse(localStorage.getItem("ItemToEdit"));
-    console.log("ASYNC", itemToEdit);
     try {
       const response = await api.get("/user");
-      console.log("response get\n", response.data.data);
       response.data.map(
         item =>
           (arraySchema = [
             ...arraySchema,
             {
-              id: item.id,
-              name: item.name,
-              email: item.email,
-              type: item.type,
-              validity: item.validity,
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt
+              Nome: item.name,
+              Email: item.email,
+              Tipo: item.type,
+              Validade: item.validity
             }
           ])
       );
@@ -107,10 +102,8 @@ class Users extends Component {
 
   registerUser = async () => {
     const { name, email, password, type } = this.state;
-    console.log("STATE", name, email, password, type);
     const token = localStorage.getItem("tokenUser");
     try {
-      console.log("teste");
       const response = await api.post(
         "/user",
         {
@@ -125,7 +118,6 @@ class Users extends Component {
           }
         }
       );
-      console.log(response);
       this.closeModal();
       window.location.reload();
     } catch (error) {
@@ -150,7 +142,7 @@ class Users extends Component {
           <ButtonAdd onClick={this.openModal}>CRIAR</ButtonAdd>
           <Title>Usuários</Title>
         </ContainerTitle>
-        <List contentList={arrayUser} page='user' />
+        <List contentList={arrayUser} page="user" />
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

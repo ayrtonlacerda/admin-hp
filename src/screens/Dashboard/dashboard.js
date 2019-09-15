@@ -6,10 +6,14 @@ import {
   Title,
   MenuContainer,
   ContainerMenu,
-  ButtonNavigation
+  ButtonNavigation,
+  Image,
+  ButtonExit
 } from "./stylesdashboard";
 
 import { Course, Discipline, Classes, Users } from "../index";
+
+import logo from "../../assets/img/logo.png";
 
 class Dashboard extends Component {
   state = {
@@ -18,7 +22,6 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     const item = await localStorage.getItem("editItem");
-    console.log(item);
   }
   renderPageFunc = () => {
     const { renderPage } = this.state;
@@ -45,7 +48,7 @@ class Dashboard extends Component {
       <Container>
         <MenuContainer>
           <ContainerTitle>
-            <Title>SPHL Admin</Title>
+            <Image src={logo} alt="Logo" />
           </ContainerTitle>
           <ContainerMenu>
             <ButtonNavigation
@@ -68,7 +71,7 @@ class Dashboard extends Component {
             >
               Usuários
             </ButtonNavigation>
-            <ButtonNavigation onClick={this.logout}>Sair</ButtonNavigation>
+            <ButtonExit onClick={this.logout}>Sair</ButtonExit>
           </ContainerMenu>
         </MenuContainer>
         {this.renderPageFunc()}
